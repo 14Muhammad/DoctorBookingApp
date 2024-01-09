@@ -1,8 +1,22 @@
 
 /*antd override*/
 input {
-    border-radius: 0;
+    border-radius: 2px !important;
+    border: 1px solid rgba(128, 128, 128, 0.3) !important;
+    height: 40px !important;
+    width: 100% !important;
+}
+input:focus{
+    outline: none;
+    box-shadow: none;
     border: 1px solid gray !important;
+}
+label {
+    font-size: 16px !important;
+    color: black !important;
+}
+.ant-form-item {
+    margin: 5px 0 !important;
 }
 /*common styling */
 .card-title {
@@ -15,6 +29,16 @@ input {
 .card {
     box-shadow: 0 0 2px gray;
     border-radius: 0 !important;
+}
+
+.primary-button{
+    background-color: blue !important;
+    border-color:  blue !important;
+    height: 40px !important;
+    width: 100% !important;
+    color: white !important;
+    font-size: 16px !important;
+
 }
 /*authentication pages*/
 .authentication {
