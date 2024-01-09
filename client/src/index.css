@@ -1,17 +1,28 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/*antd override*/
+input {
+    border-radius: 0;
+    border: 1px solid gray !important;
 }
-
-.ant-btn-primary {
-  background-color: cadetblue !important;
+/*common styling */
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.normal-text {
+    font-size: 1rem;
+}
+.card {
+    box-shadow: 0 0 2px gray;
+    border-radius: 0 !important;
+}
+/*authentication pages*/
+.authentication {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.authentication-form {
+    width: 400px;
 }
