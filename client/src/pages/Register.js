@@ -1,22 +1,27 @@
 import React from 'react';
 import {Button, Form} from "antd";
+import {Link} from "react-router-dom";
 
 function Register(props) {
+    const onFinish = values => {
+        console.log('Received values of the form', values);
+    }
     return (
         <div className='authentication'>
             <div className='authentication-form card p-3'>
                 <h1 className='card-title'>Nice To Meet You </h1>
-                <Form layout='vertical'>
+                <Form layout='vertical' onFinish={onFinish}>
                     <Form.Item label='Name' name='name'>
                         <input placeholder='Name'/>
                     </Form.Item>
-                <Form.Item label='Email' name='email'>
+                    <Form.Item label='Email' name='email'>
                         <input placeholder='Email'/>
                     </Form.Item>
-                <Form.Item label='Password' name='password'>
-                        <input placeholder='password'/>
+                    <Form.Item label='Password' name='password'>
+                        <input placeholder='Password' type='password'/>
                     </Form.Item>
-                    <Button className='primary-button mt-3'>REGISTER</Button>
+                    <Button className='primary-button my-2' htmlType='submit'>REGISTER</Button>
+                    <Link to='/login' className='anchor'>CLICK HERE TO LOGIN</Link>
                 </Form>
             </div>
         </div>
