@@ -1,9 +1,12 @@
-
+import React from 'react';
+import 'antd/dist/reset.css';
+import {Button} from 'antd';
 
 function App() {
     return (
-        <div className="App">
+        <div className="App p-5">
             <h1>Doctor Booking App</h1>
+            <Button type="primary">Primary Button</Button>
         </div>
     );
 }
