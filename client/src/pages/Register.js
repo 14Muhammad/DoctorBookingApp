@@ -1,10 +1,23 @@
 import React from 'react';
 import {Button, Form} from "antd";
 import {Link} from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 function Register(props) {
-    const onFinish = values => {
-        console.log('Received values of the form', values);
+    const onFinish = async (values) => {
+        try {
+            console.log('Received values of the form', values);
+            const response = await axios('/api/user/register', values);
+            if (response.data.success) {
+                toast.success(response.data.message);
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (e) {
+            toast.error('Something went wrong');
+            console.log(e);
+        }
     }
     return (
         <div className='authentication'>
