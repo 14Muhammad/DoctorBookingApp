@@ -11,13 +11,13 @@ function Register(props) {
             <div className='authentication-form card p-3'>
                 <h1 className='card-title'>Nice To Meet You </h1>
                 <Form layout='vertical' onFinish={onFinish}>
-                    <Form.Item label='Name' name='name'>
-                        <input placeholder='Name'/>
+                    <Form.Item label='Name' name='name' initialValue={''}>
+                        <input placeholder='Name' value=''/>
                     </Form.Item>
-                    <Form.Item label='Email' name='email'>
+                    <Form.Item label='Email' name='email' initialValue={''}>
                         <input placeholder='Email'/>
                     </Form.Item>
-                    <Form.Item label='Password' name='password'>
+                    <Form.Item label='Password' name='password' initialValue={''}>
                         <input placeholder='Password' type='password'/>
                     </Form.Item>
                     <Button className='primary-button my-2' htmlType='submit'>REGISTER</Button>
