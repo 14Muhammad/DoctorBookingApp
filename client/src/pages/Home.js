@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import axios from "axios";
+import Layout from "../components/Layout";
 function Home(props) {
     const getData = async ()=>{
         try {
@@ -17,7 +18,9 @@ function Home(props) {
         getData();
     },[])
     return (
-        <div>Doctor Booking App</div>
+        <Layout>
+            <h1> HomePage</h1>
+        </Layout>
     );
 }
 export default Home;
