@@ -57,4 +57,6 @@
 .active-menu-item {
     color: white;
     background-color: #0a1628;
+    padding: 5px;
+    border-radius: 5px;
 }
