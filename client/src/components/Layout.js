@@ -90,12 +90,10 @@ function Layout({children}) {
                         </div>
                     </div>
                     <div className='body'>
-                        body {children}
+                        {children}
                     </div>
-
                 </div>
             </div>
-
         </div>
     );
 }
