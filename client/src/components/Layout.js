@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import '../layout.css';
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
+import {Badge} from "antd";
 
 function Layout({children}) {
     const [collapsed, setCollapsed] = useState(false);
@@ -85,8 +86,10 @@ function Layout({children}) {
                             <i className='ri-menu-2-fill header-action-icon' onClick={() => setCollapsed(false)}></i> :
                             <i className='ri-close-fill header-action-icon' onClick={() => setCollapsed(true)}></i>}
                         <div className='d-flex align-items-center px-4'>
-                            <i className='ri-notification-line header-action-icon mx-3'></i>
-                            <Link className='anchor' to='/profile'>{user?.name}</Link>
+                            <Badge count={user?.unseenNotifications.length}>
+                                <i className='ri-notification-line header-action-icon ml-3 mr-1'></i>
+                            </Badge>
+                            <Link className='anchor mx-3' to='/profile'>{user?.name}</Link>
                         </div>
                     </div>
                     <div className='body'>
