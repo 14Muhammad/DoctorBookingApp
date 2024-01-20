@@ -1,10 +1,41 @@
 import React from 'react';
 import Layout from "../components/Layout";
 import {Button, Col, Form, Input, Row, TimePicker} from "antd";
+import {hideLoading, showLoading} from "../redux/alertsSlice";
+import axios from "axios";
+import toast from "react-hot-toast";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 function ApplyDoctor(props) {
-    const onFinish = values =>{
-        console.log('Success:',values);
+    const dispatch = useDispatch();
+    const {user} = useSelector(state => state.user);
+    const navigate = useNavigate();
+    const onFinish = async (values) => {
+        console.log('Success:', values);
+        try {
+            dispatch(showLoading());
+            console.log('Received values of the form', values);
+            const response = await axios.post("/api/user/apply-doctor",
+                {
+                    ...values,
+                    userId: user._id
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+            dispatch(hideLoading());
+            if (response.data.success) {
+                toast.success(response.data.message);
+                navigate("/");
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (error) {
+            dispatch(hideLoading());
+            toast.error('Something went wrong');
+        }
     }
     return (
         <Layout>
