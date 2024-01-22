@@ -39,12 +39,12 @@ function Layout({children}) {
         },
         {
             name: 'Users',
-            link: '/users',
+            link: '/admin/users-list',
             icon: 'ri-user-line'
         },
         {
             name: 'Doctors',
-            link: '/doctors',
+            link: '/admin/doctors-list',
             icon: 'ri-user-star-line'
         },
         {
