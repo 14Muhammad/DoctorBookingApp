@@ -4,6 +4,7 @@ import {useDispatch} from "react-redux";
 import {hideLoading, showLoading} from "../../redux/alertsSlice";
 import axios from "axios";
 import {Table} from "antd";
+import toast from "react-hot-toast";
 
 function DoctorsList(props) {
     const [doctors, setDoctors] = useState([])
@@ -23,6 +24,31 @@ function DoctorsList(props) {
                 setDoctors(response.data.data)
             }
         } catch (e) {
+            dispatch(hideLoading());
+        }
+    }
+    const changeDoctorsStatus = async (record, status) => {
+        try {
+            dispatch(showLoading());
+            const response = await axios.post(
+                '/api/admin/change-doctor-account-status',
+                {
+                    doctorId: record._id,
+                    userId: record.userId,
+                    status: status
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                })
+            dispatch(hideLoading());
+            if (response.data.success) {
+                toast.success(response.data.message);
+                getDoctorsData();
+            }
+        } catch (e) {
+            toast.error('Something went wrong');
             dispatch(hideLoading());
         }
     }
@@ -57,8 +83,19 @@ function DoctorsList(props) {
             dataIndex: 'action',
             render: (text, record) => (
                 <div className='d-flex'>
-                    {record.status === "pending" && <h1 className="anchor">Approve</h1>}
-                    {record.status === "approved" && <h1 className="anchor">Block</h1>}
+                    {record.status === "pending" &&
+                        <h1 className="anchor"
+                            onClick={() => changeDoctorsStatus(record, 'approved')}>
+                            Approve
+                        </h1>
+                    }
+                    {record.status === "approved" &&
+                        <h1
+                            className="anchor"
+                            onClick={() => changeDoctorsStatus(record, 'blocked')}>
+                            Block
+                        </h1>
+                    }
                 </div>
             )
         },
