@@ -52,8 +52,27 @@ function Layout({children}) {
             link: '/profile',
             icon: 'ri-user-line'
         }
-    ]
-    const menuToBeRendered = user?.isAdmin ? adminMenu : userMenu;
+    ];
+    const doctorMenu = [
+        {
+            name: 'Home',
+            link: '/',
+            icon: 'ri-home-line'
+        },
+        {
+            name: 'Appointments',
+            link: '/appointments',
+            icon: 'ri-file-list-line'
+        },
+        {
+            name: 'Profile',
+            link: `/doctor/profile/${user?._id}`,
+            icon: 'ri-user-line'
+        }
+    ];
+    const menuToBeRendered = user?.isAdmin ?
+        adminMenu : user?.isDoctor ?
+            doctorMenu : userMenu;
     return (
         <div className='main'>
             <div className='d-flex layout'>
@@ -86,7 +105,7 @@ function Layout({children}) {
                             <i className='ri-menu-2-fill header-action-icon' onClick={() => setCollapsed(false)}></i> :
                             <i className='ri-close-fill header-action-icon' onClick={() => setCollapsed(true)}></i>}
                         <div className='d-flex align-items-center px-4'>
-                            <Badge count={user?.unseenNotifications.length} onClick={()=>navigate('/notifications')}>
+                            <Badge count={user?.unseenNotifications.length} onClick={() => navigate('/notifications')}>
                                 <i className='ri-notification-line header-action-icon ml-3 mr-1'></i>
                             </Badge>
                             <Link className='anchor mx-3' to='/profile'>{user?.name}</Link>

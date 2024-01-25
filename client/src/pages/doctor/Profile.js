@@ -1,16 +1,15 @@
 import React from 'react';
-import Layout from "../components/Layout";
-import {Button, Col, Form, Input, Row, TimePicker} from "antd";
-import {hideLoading, showLoading} from "../redux/alertsSlice";
+import Layout from "../../components/Layout";
+import DoctorForm from "../../components/DoctorForm";
+import {hideLoading, showLoading} from "../../redux/alertsSlice";
 import axios from "axios";
 import toast from "react-hot-toast";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import DoctorForm from "../components/DoctorForm";
 
-function ApplyDoctor(props) {
-    const dispatch = useDispatch();
+function Profile(props) {
     const {user} = useSelector(state => state.user);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const onFinish = async (values) => {
         console.log('Success:', values);
@@ -40,11 +39,11 @@ function ApplyDoctor(props) {
     }
     return (
         <Layout>
-            <h1 className='page-title'> Apply Doctor </h1>
+            <h1 className='page-title'> Doctor Profile </h1>
             <hr/>
             <DoctorForm onFinish={onFinish}/>
         </Layout>
     );
 }
 
-export default ApplyDoctor;
+export default Profile;
