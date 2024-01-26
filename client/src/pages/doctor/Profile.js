@@ -1,18 +1,20 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Layout from "../../components/Layout";
 import DoctorForm from "../../components/DoctorForm";
 import {hideLoading, showLoading} from "../../redux/alertsSlice";
 import axios from "axios";
 import toast from "react-hot-toast";
 import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import doctorForm from "../../components/DoctorForm";
 
 function Profile(props) {
     const {user} = useSelector(state => state.user);
+    const params = useParams();
+    const {doctor, setDoctor} = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const onFinish = async (values) => {
-        console.log('Success:', values);
         try {
             dispatch(showLoading());
             console.log('Received values of the form', values);
@@ -37,11 +39,38 @@ function Profile(props) {
             toast.error('Something went wrong');
         }
     }
+    const getDoctorData = async () => {
+        try {
+            dispatch(showLoading());
+            const response = await axios.post(
+                '/api/doctor/get-doctor-info-by-user-id',
+                {
+                    userId: params.userId,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            );
+            dispatch(hideLoading())
+            if (response.data.success) {
+                setDoctor(response.data.data);
+            }
+        } catch (e) {
+            dispatch(hideLoading());
+        }
+    }
+    useEffect(
+        () => {
+            getDoctorData()
+        },
+        [])
     return (
         <Layout>
             <h1 className='page-title'> Doctor Profile </h1>
             <hr/>
-            <DoctorForm onFinish={onFinish}/>
+            <DoctorForm onFinish={onFinish} initialValues={doctor}/>
         </Layout>
     );
 }

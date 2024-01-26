@@ -1,9 +1,9 @@
 import React from 'react';
 import {Button, Col, Form, Input, Row, TimePicker} from "antd";
 
-function DoctorForm({onFinish}) {
+function DoctorForm({onFinish}, {initialValue}) {
     return (
-        <Form layout='vertical' onFinish={onFinish}>
+        <Form layout='vertical' onFinish={onFinish} initialValues={initialValue}>
             <h1 className='card-title mt-3'>Personal Information</h1>
             <Row gutter={20}>
                 <Col span={8} xs={24} sm={24} lg={8}>

@@ -12,7 +12,6 @@ function Login(props) {
     const onFinish = async values => {
         try {
             dispatch(showLoading());
-            console.log('Received values of the form', values);
             const response = await axios.post("/api/user/login", values);
             dispatch(hideLoading());
             if (response.data.success) {
