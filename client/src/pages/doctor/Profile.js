@@ -6,18 +6,16 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
-import doctorForm from "../../components/DoctorForm";
 
 function Profile(props) {
-    const {user} = useSelector(state => state.user);
+    const {user} = useSelector((state) => state.user);
     const params = useParams();
-    const {doctor, setDoctor} = useState(null);
+    const [doctor, setDoctor] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const onFinish = async (values) => {
         try {
             dispatch(showLoading());
-            console.log('Received values of the form', values);
             const response = await axios.post("/api/user/apply-doctor",
                 {
                     ...values,
@@ -53,7 +51,7 @@ function Profile(props) {
                     }
                 }
             );
-            dispatch(hideLoading())
+            dispatch(hideLoading());
             if (response.data.success) {
                 setDoctor(response.data.data);
             }
@@ -63,14 +61,14 @@ function Profile(props) {
     }
     useEffect(
         () => {
-            getDoctorData()
+            getDoctorData();
         },
         [])
     return (
         <Layout>
             <h1 className='page-title'> Doctor Profile </h1>
             <hr/>
-            <DoctorForm onFinish={onFinish} initialValues={doctor}/>
+            {doctor && <DoctorForm onFinish={onFinish} initialValues={doctor}/>}
         </Layout>
     );
 }
