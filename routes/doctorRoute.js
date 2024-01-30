@@ -21,4 +21,26 @@ router.post('/get-doctor-info-by-user-id',
     }
 })
 
+router.post('/update-doctor-profile',
+    authMiddleware,
+    async (req, res) => {
+        try {
+            const doctor = await Doctor.findOneAndUpdate(
+                {
+                    userId: req.body.userId
+                },
+                req.body
+            )
+            res.status(200).send({
+                success: true,
+                message: "Doctor profile updated successfully",
+                data: doctor
+            })
+        } catch (e) {
+            res.status(500).send({
+                message: "Error updating doctor info",
+                success: false, e
+            });
+        }
+    })
 module.exports = router;

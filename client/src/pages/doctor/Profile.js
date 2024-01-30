@@ -16,7 +16,7 @@ function Profile(props) {
     const onFinish = async (values) => {
         try {
             dispatch(showLoading());
-            const response = await axios.post("/api/user/apply-doctor",
+            const response = await axios.post("/api/doctor/update-doctor-profile",
                 {
                     ...values,
                     userId: user._id
