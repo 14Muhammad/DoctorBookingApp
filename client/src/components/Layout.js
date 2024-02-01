@@ -73,12 +73,16 @@ function Layout({children}) {
     const menuToBeRendered = user?.isAdmin ?
         adminMenu : user?.isDoctor ?
             doctorMenu : userMenu;
+    const role = user?.isAdmin ?
+        'Admin' : user?.isDoctor ?
+            'Doctor' : 'User';
     return (
         <div className='main'>
             <div className='d-flex layout'>
                 <div className={`${collapsed ? 'collapsed-sidebar' : 'sidebar'}`}>
                     <div className='sidebar-header'>
                         <h1 className='logo'> DBA </h1>
+                        <h2 className='role'>{role}</h2>
                     </div>
                     <div className='menu'>
                         {menuToBeRendered.map((menu, i) => {
