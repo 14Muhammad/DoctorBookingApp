@@ -6,6 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
+import moment from "moment";
 
 function Profile(props) {
     const {user} = useSelector((state) => state.user);
@@ -19,7 +20,11 @@ function Profile(props) {
             const response = await axios.post("/api/doctor/update-doctor-profile",
                 {
                     ...values,
-                    userId: user._id
+                    userId: user._id,
+                    timings: [
+                        values.timings[0].format("HH:mm"),
+                        values.timings[1].format("HH:mm")
+                    ]
                 }, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`

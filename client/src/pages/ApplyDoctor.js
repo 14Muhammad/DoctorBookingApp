@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import DoctorForm from "../components/DoctorForm";
+import moment from "moment/moment";
 
 function ApplyDoctor(props) {
     const dispatch = useDispatch();
@@ -20,7 +21,11 @@ function ApplyDoctor(props) {
             const response = await axios.post("/api/user/apply-doctor",
                 {
                     ...values,
-                    userId: user._id
+                    userId: user._id,
+                    timings: [
+                        moment(values.timings[0]).format("HH:mm"),
+                        moment(values.timings[1]).format("HH:mm")
+                    ]
                 }, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
