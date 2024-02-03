@@ -5,6 +5,7 @@ const Doctor = require('../models/doctorModel');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const authMiddleware = require("../middlewares/authMiddleware");
+const Appointment = require("../models/appointmentModel");
 router.post('/register', async (req, res) => {
     try {
         const userExists = await User.findOne({email: req.body.email});
@@ -146,5 +147,30 @@ router.get('/get-all-approved-doctors',
                 });
         }
     })
-
+router.post('/book-appointment',
+    authMiddleware,
+    async (req, res) => {
+        try {
+            req.body.status = "pending";
+            const newAppointment = new Appointment(req.body);
+            await newAppointment.save();
+            //pushing notification to Doctor based on his user ID
+            const user = await User.findOne({_id: req.body.doctorInfo.userId});
+            user.unseenNotifications.push({
+                type: "new-appointment-request",
+                message: `A new appointment request has been made by ${req.body.userInfo.name}`,
+                onClickPath: '/doctor/appointment'
+            });
+            await user.save();
+            res.status(200).send({
+                message: "Appointment booked successfully",
+                success: true
+            })
+        } catch (e) {
+            res.status(500).send({
+                message: "Error booking appointment",
+                success: false, e
+            });
+        }
+    })
 module.exports = router;
