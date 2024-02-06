@@ -215,4 +215,25 @@ router.post('/check-booking-availability',
             });
         }
     })
+
+router.get('/get-appointments-by-user-id',
+    authMiddleware,
+    async (req, res) => {
+        try {
+            const appointments = await Appointment.find({userId: req.body.userId});
+            res.status(200).send({
+                success: true,
+                message: 'Appointments fetched successfully',
+                data: appointments,
+            })
+        } catch (e) {
+            res.status(500)
+                .send({
+                    message: 'Error fetching appointment',
+                    success: false,
+                    e
+                });
+        }
+    })
+
 module.exports = router;
