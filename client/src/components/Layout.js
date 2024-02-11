@@ -61,7 +61,7 @@ function Layout({children}) {
         },
         {
             name: 'Appointments',
-            link: '/appointments',
+            link: '/doctor/appointments',
             icon: 'ri-file-list-line'
         },
         {
