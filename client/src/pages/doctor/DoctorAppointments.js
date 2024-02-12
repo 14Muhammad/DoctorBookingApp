@@ -34,9 +34,8 @@ function DoctorAppointments(props) {
             const response = await axios.post(
                 '/api/doctor/change-appointment-status',
                 {
-                    doctorId: record._id,
-                    userId: record.userId,
-                    status: status
+                    appointmentId: record._id,
+                    status:status
                 },
                 {
                     headers: {
@@ -99,8 +98,8 @@ function DoctorAppointments(props) {
             render: (text, record) => (
                 <div className='d-flex'>
                     {record.status === "pending" && (
-                        <div>
-                            <h1 className="anchor"
+                        <div className='d-flex'>
+                            <h1 className="anchor px-2"
                                 onClick={() => changeAppointmentStatus(record, 'approved')}>
                                 Approve
                             </h1>
