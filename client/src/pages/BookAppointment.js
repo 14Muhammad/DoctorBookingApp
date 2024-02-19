@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Layout from "../components/Layout";
-import {useParams} from "react-router-dom";
+import {Navigate, useNavigate, useParams} from "react-router-dom";
 import {hideLoading, showLoading} from "../redux/alertsSlice";
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 
 function BookAppointment(props) {
     const [isAvailable, setIsAvailable] = useState(false);
+    const navigate = useNavigate();
     const [date, setDate] = useState();
     const [time, setTime] = useState();
     const {user} = useSelector((state) => state.user);
@@ -61,6 +62,7 @@ function BookAppointment(props) {
             dispatch(hideLoading());
             if (response.data.success) {
                 toast.success(response.data.message);
+                navigate('/appointments')
             }
         } catch (e) {
             toast.error("Error booking appointment")
@@ -127,7 +129,10 @@ function BookAppointment(props) {
                             <p>
                                 <b>Fee per visit : </b>{doctor.feePerConsultation}
                             </p>
-                            <div className="d-flex flex-column pt-2">
+                            <p>
+                                <b>Website : </b>{doctor.website}
+                            </p>
+                            <div className="d-flex flex-column pt-2 mt-2">
                                 <DatePicker format='DD-MM-YYYY'
                                             onChange={
                                                 (value) => {
@@ -142,9 +147,9 @@ function BookAppointment(props) {
                                                     setTime(moment(new Date(value)).format("HH:mm"));
                                                 }
                                             }/>
-                                <Button onClick={checkAvailablity}
-                                        className='primary-button mt-3 full-width-button'>
-                                    Check Availability</Button>
+                                {!isAvailable && <Button onClick={checkAvailablity}
+                                                         className='primary-button mt-3 full-width-button'>
+                                    Check Availability</Button>}
                                 {isAvailable && <Button onClick={bookNow}
                                                         className='primary-button mt-3 full-width-button'>
                                     Book Now</Button>}
